@@ -1,0 +1,111 @@
+<div class="main-content">
+  <div class="container">
+    <div class="row no-gutter">
+      <!-- The image half -->
+      <div class="col-md-6 d-none d-md-flex bg-image"></div>
+
+      <!-- The content half -->
+      <div class="col-md-6 bg-light">
+        <div class="login d-flex align-items-center py-5">
+          <!-- Demo content-->
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-10 col-xl-7 mx-auto">
+                <h3 class="display-4">REGISTRATION</h3>
+                <p class="text-muted mb-4">
+                  Please enter the informations below!
+                </p>
+
+                <mat-card class="my-card">
+                  <mat-card-content>
+
+
+                    <form class="my-form" [formGroup]='registerForm'>
+
+                      <mat-form-field class="full-width">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Name" formControlName="name">
+                        <mat-error
+                          *ngIf="registerForm.controls['name'].errors?.required && registerForm.controls['name'].touched">
+                          Name is required!</mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="full-width">
+                        <mat-label>Lastname</mat-label>
+                        <input matInput placeholder="Lastname" formControlName="lastname">
+                        <mat-error
+                          *ngIf="registerForm.controls['lastname'].errors?.required && registerForm.controls['lastname'].touched">
+                          Lastname is required!</mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="full-width">
+                        <mat-label>Phone</mat-label>
+                        <input matInput placeholder="Phone" formControlName="phone">
+                      </mat-form-field>
+                      <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email*" formControlName="email" (keyup)=verifEmail()>
+                        <mat-error *ngIf="
+                        registerForm.controls['email'].errors?.required &&
+                        registerForm.controls['email'].touched">
+                          email is required!</mat-error>
+                        <mat-error
+                          *ngIf="registerForm.controls['email'].errors?.email && registerForm.controls['email'].touched ">
+                          invalid email</mat-error>
+
+                        <mat-error *ngIf="emailExist">
+                          email already exist</mat-error>
+                      </mat-form-field>
+
+
+                      <mat-form-field class="full-width">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" placeholder="Password*" formControlName="password"
+                          [errorStateMatcher]="passwordErrorMatcher">
+                        <mat-error>Error: {{ getErrorMessage('password') }}</mat-error>
+
+                      </mat-form-field>
+                      <mat-form-field class="full-width">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput type="password" placeholder="Password*" formControlName="confpassword"
+                          [errorStateMatcher]="confirmErrorMatcher">
+                        <mat-error>Error: {{ getErrorMessage('confpassword') }}</mat-error>
+
+                      </mat-form-field>
+
+                    </form>
+
+                    <!-- <form class="my-form">
+                      <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="email*" />
+
+                      </mat-form-field>
+                      <mat-form-field class="full-width">
+                        <mat-label>Password</mat-label>
+                        <input type="password" matInput placeholder="password*" />
+
+
+                    </form> -->
+                  </mat-card-content>
+                  <mat-card-actions>
+                    <button mat-raised-button color="primary" (click)="register()" [disabled]="!registerForm.valid">
+                      SAVE
+                    </button>
+                  </mat-card-actions>
+
+                </mat-card>
+                <div class="mt-4">
+                  <p class="loginhere">
+                    Already have an account ?
+                    <button mat-raised-button color="warn" routerLink="/login">Sign up</button>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- End -->
+          </div>
+        </div>
+        <!-- End -->
+      </div>
+    </div>
+  </div>
+</div>
