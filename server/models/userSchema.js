@@ -11,7 +11,8 @@ var userSchema = new mongoose.Schema({
     techFront: { type: Schema.Types.ObjectId, ref: 'techFront' },
     techBack: { type: Schema.Types.ObjectId, ref: 'techBack' },
     conseiller: { type: Schema.Types.ObjectId, ref: 'conseiller' },
-    client: { type: Schema.Types.ObjectId, ref: 'client' }
+    client: { type: Schema.Types.ObjectId, ref: 'client' },
+    status: { type: String, enum: ['active', 'suspended'], default: 'suspended' }
 
 
 })

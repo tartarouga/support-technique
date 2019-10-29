@@ -28,7 +28,15 @@
                         <mat-error
                           *ngIf="registerForm.controls['name'].errors?.required && registerForm.controls['name'].touched">
                           Name is required!</mat-error>
+
+
+
                       </mat-form-field>
+
+
+
+
+
                       <mat-form-field class="full-width">
                         <mat-label>Lastname</mat-label>
                         <input matInput placeholder="Lastname" formControlName="lastname">
@@ -44,8 +52,8 @@
                         <mat-label>Email</mat-label>
                         <input matInput placeholder="Email*" formControlName="email" (keyup)=verifEmail()>
                         <mat-error *ngIf="
-                        registerForm.controls['email'].errors?.required &&
-                        registerForm.controls['email'].touched">
+                          registerForm.controls['email'].errors?.required &&
+                          registerForm.controls['email'].touched">
                           email is required!</mat-error>
                         <mat-error
                           *ngIf="registerForm.controls['email'].errors?.email && registerForm.controls['email'].touched ">
@@ -58,33 +66,37 @@
 
                       <mat-form-field class="full-width">
                         <mat-label>Password</mat-label>
-                        <input matInput type="password" placeholder="Password*" formControlName="password"
-                          [errorStateMatcher]="passwordErrorMatcher">
-                        <mat-error>Error: {{ getErrorMessage('password') }}</mat-error>
+                        <input matInput type="password" placeholder="Password*" formControlName="password">
+                        <mat-error *ngIf="
+                          registerForm.controls['password'].errors?.required &&
+                          registerForm.controls['password'].touched">
+                          password is required!</mat-error>
 
                       </mat-form-field>
                       <mat-form-field class="full-width">
                         <mat-label>Confirm Password</mat-label>
                         <input matInput type="password" placeholder="Password*" formControlName="confpassword"
-                          [errorStateMatcher]="confirmErrorMatcher">
-                        <mat-error>Error: {{ getErrorMessage('confpassword') }}</mat-error>
+                          (keyup)="verifPassword()">
+                        <mat-error *ngIf="notsamePass">
+                          Passwords do not match!
+                        </mat-error>
 
                       </mat-form-field>
 
                     </form>
 
                     <!-- <form class="my-form">
-                      <mat-form-field class="full-width">
-                        <mat-label>Email</mat-label>
-                        <input matInput placeholder="email*" />
-
-                      </mat-form-field>
-                      <mat-form-field class="full-width">
-                        <mat-label>Password</mat-label>
-                        <input type="password" matInput placeholder="password*" />
-
-
-                    </form> -->
+                        <mat-form-field class="full-width">
+                          <mat-label>Email</mat-label>
+                          <input matInput placeholder="email*" />
+  
+                        </mat-form-field>
+                        <mat-form-field class="full-width">
+                          <mat-label>Password</mat-label>
+                          <input type="password" matInput placeholder="password*" />
+  
+  
+                      </form> -->
                   </mat-card-content>
                   <mat-card-actions>
                     <button mat-raised-button color="primary" (click)="register()" [disabled]="!registerForm.valid">

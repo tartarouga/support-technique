@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxPaginationModule } from 'ngx-pagination';
 import {
   MatInputModule,
   MatButtonModule,
@@ -11,7 +13,10 @@ import {
   MatFormFieldModule,
   MatTooltipModule,
   MatSelectModule,
-  MatCardModule
+  MatCardModule,
+  MatDialogModule,
+  MatRadioModule,
+  MatTableModule
 } from "@angular/material";
 
 
@@ -33,6 +38,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { ListComponent } from './plateforme/list/list.component';
 import { PlateformeComponent } from './plateforme/plateforme.component';
+import { RegisterUserComponent } from './register-user/register-user.component';
+import { DialogueshowComponent } from './dialogueshow/dialogueshow.component';
+import { MatIconModule } from '@angular/material/icon';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   imports: [
@@ -48,9 +57,14 @@ import { PlateformeComponent } from './plateforme/plateforme.component';
     MatTooltipModule,
     MatButtonModule,
     HttpClientModule,
-
+    MatDialogModule,
+    MatRadioModule,
+    MatPaginatorModule,
+    MatTableModule,
+    NgxPaginationModule,
     RouterModule,
     AppRoutingModule,
+    MatIconModule
 
   ],
   declarations: [
@@ -67,8 +81,17 @@ import { PlateformeComponent } from './plateforme/plateforme.component';
 
     ListComponent,
 
-    PlateformeComponent
+    PlateformeComponent,
 
+    RegisterUserComponent,
+
+    DialogueshowComponent,
+
+    FilterPipe
+
+  ],
+  entryComponents: [
+    RegisterUserComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

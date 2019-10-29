@@ -96,39 +96,39 @@ router.post('/findemail', async (req, res) => {
 
 })
 
-router.get(
-  "/profile",
-  passport.authenticate('bearer', { session: false }),
-  async (req, res) => {
-    if (req.user.role === 'admin') {
-      const result = await Admin.findOne(req.user.admin._id).exec().catch(err => err);
-      res.send(result)
-    }
-    if (req.user.role === 'chefBack') {
-      const result = await ChBack.findOne(req.user.chefBack._id).exec().catch(err => err);
-      res.send(result)
-    }
-    if (req.user.role === 'chefFront') {
-      const result = await ChFront.findOne(req.user.chefFront._id).exec().catch(err => err);
-      res.send(result)
-    }
-    if (req.user.role === 'techBack') {
-      const result = await TechBack.findOne(req.user.techBack._id).exec().catch(err => err);
-      res.send(result)
-    }
-    if (req.user.role === 'techFront') {
-      const result = await TechFront.findOne(req.user.techFront._id).exec().catch(err => err);
-      res.send(result)
-    }
-    if (req.user.role === 'conseiller') {
-      const result = await Conseiller.findOne(req.user.conseiller._id).exec().catch(err => err);
-      res.send(result)
-    }
+// router.get(
+//   "/profile",
+
+//   async (req, res) => {
+//     if (req.body.role === 'admin') {
+//       const result = await Admin.findOne(req.user.admin._id).exec().catch(err => err);
+//       res.send(result)
+//     }
+//     if (req.body.role === 'chefBack') {
+//       const result = await ChBack.findOne(req.user.chefBack._id).exec().catch(err => err);
+//       res.send(result)
+//     }
+//     if (req.body.role === 'chefFront') {
+//       const result = await ChFront.findOne(req.user.chefFront._id).exec().catch(err => err);
+//       res.send(result)
+//     }
+//     if (req.body.role === 'techBack') {
+//       const result = await TechBack.findOne(req.user.techBack._id).exec().catch(err => err);
+//       res.send(result)
+//     }
+//     if (req.body.role === 'techFront') {
+//       const result = await TechFront.findOne(req.user.techFront._id).exec().catch(err => err);
+//       res.send(result)
+//     }
+//     if (req.body.role === 'conseiller') {
+//       const result = await Conseiller.findOne(req.user.conseiller._id).exec().catch(err => err);
+//       res.send(result)
+//     }
 
 
 
 
-  });
+//   });
 
 
 //     //var role = req.user.role;
@@ -142,19 +142,46 @@ router.get(
 //   }
 // );
 
-router.get('/getAllUser', async (req, res) => {
+router.get('/getAllUser', passport.authenticate("bearer", { session: false }), async (req, res) => {
+  var result = await User.find().exec()
+  res.send({ data: result });
+});
 
-  if (req.body.role === "admin") {
-    var result = await User.find().populate('admin').populate('techBack').exec()
-    res.send(result);
-  }
-  if (req.body.role === "chefBack") {
-    var result = await User.find({ role: 'techBack' }).exec()
-    res.send(result);
-  }
+router.get('/getUserTechFront', passport.authenticate("bearer", { session: false }), async (req, res) => {
+  var result = await User.find({ role: 'techBack' }).exec()
+  res.send(result);
+});
 
 
+
+
+
+
+
+
+
+
+router.get('/getUserAdmin/:id', passport.authenticate("bearer", { session: false }), async (req, res) => {
+  var result = await Admin.findById(req.params.id).exec()
+  res.send(result);
 })
+router.get('/getUserChefBack/:id', passport.authenticate("bearer", { session: false }), async (req, res) => {
+  var result = await ChBack.findById(req.params.id).exec()
+  res.send(result);
+})
+
+router.post('/updateUser/:id', async (req, res) => {
+  var result = await User.findByIdAndUpdate({ _id: req.params.id }, { $set: req.body }).catch(err => err);
+  res.send(result)
+})
+
+
+
+
+
+
+
+
 
 
 module.exports = router;

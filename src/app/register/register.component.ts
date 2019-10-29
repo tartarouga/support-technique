@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 import { AuthService } from 'app/services/auth.service';
 import { invalid } from '@angular/compiler/src/render3/view/util';
-import { ErrorStateMatcher } from '@angular/material';
+
 
 
 
@@ -26,17 +26,23 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   emailExist: any = false;
 
+  notsamePass: boolean = false;
+
+
+
 
   constructor(private auth: AuthService) {
     this.registerForm = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
-      password: new FormControl("", [Validators.required, Validators.minLength(5)]),
-      confpassword: new FormControl("", [Validators.required, Validators.minLength(5)]),
+      password: new FormControl("", [Validators.required]),
+      confpassword: new FormControl("", [Validators.required]),
       name: new FormControl("", [Validators.required]),
       lastname: new FormControl("", [Validators.required]),
       phone: new FormControl()
-    }), { Validators: passwordMatchValidator }
+    })
 
+    this.registerForm.controls.password.valueChanges
+      .subscribe(x => this.registerForm.controls.confpassword.updateValueAndValidity())
 
   }
 
@@ -45,21 +51,7 @@ export class RegisterComponent implements OnInit {
   }
 
 
-  passwordErrorMatcher = {
-    isErrorState: (control: FormControl, form: FormGroupDirective): boolean => {
-      const controlInvalid = control.touched && control.invalid;
-      const formInvalid = control.touched && this.registerForm.get('confpassword').touched && this.registerForm.invalid;
-      return controlInvalid || formInvalid;
-    }
-  }
 
-  confirmErrorMatcher = {
-    isErrorState: (control: FormControl, form: FormGroupDirective): boolean => {
-      const controlInvalid = control.touched && control.invalid;
-      const formInvalid = control.touched && this.registerForm.get('password').touched && this.registerForm.invalid;
-      return controlInvalid || formInvalid;
-    }
-  }
 
 
 
@@ -91,21 +83,36 @@ export class RegisterComponent implements OnInit {
     })
   }
 
+  verifPassword() {
 
-  getErrorMessage(controlName: string) {
-    if (this.registerForm.controls[controlName].hasError('minlength')) {
-      return 'Must be at least 5 characters'
+    const password = this.registerForm.root.get('password')
+    console.log(password)
+    if (password) {
+      const value = password.value
+      if (value != this.registerForm.get('confpassword').value) {
+        this.notsamePass = true;
+        this.registerForm.controls['confpassword'].setErrors({ 'valid': false });
+
+      } else {
+
+        this.notsamePass = false
+        this.registerForm.controls['confpassword'].markAsTouched();
+
+      }
     }
 
-    return 'Passwords must match'
+
   }
 
 
 
+
+
+
+
+
 }
 
-function passwordMatchValidator(g: FormGroup) {
-  const password = g.get('password').value;
-  const confirm = g.get('confpassword').value
-  return password === confirm ? null : { mismatch: true };
-}
+
+
+

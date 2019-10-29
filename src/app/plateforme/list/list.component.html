@@ -4,274 +4,311 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Simple Table</h4>
-                        <p class="card-category"> Here is a subtitle for this table</p>
+                        <h4 class="card-title ">Users List</h4>
+
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead class=" text-primary">
-                                    <th>
-                                        ID
-                                    </th>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Country
-                                    </th>
-                                    <th>
-                                        City
-                                    </th>
-                                    <th>
-                                        Salary
-                                    </th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Niger
-                                        </td>
-                                        <td>
-                                            Oud-Turnhout
-                                        </td>
-                                        <td class="text-primary">
-                                            $36,738
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            2
-                                        </td>
-                                        <td>
-                                            Minerva Hooper
-                                        </td>
-                                        <td>
-                                            Curaçao
-                                        </td>
-                                        <td>
-                                            Sinaai-Waas
-                                        </td>
-                                        <td class="text-primary">
-                                            $23,789
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            3
-                                        </td>
-                                        <td>
-                                            Sage Rodriguez
-                                        </td>
-                                        <td>
-                                            Netherlands
-                                        </td>
-                                        <td>
-                                            Baileux
-                                        </td>
-                                        <td class="text-primary">
-                                            $56,142
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            4
-                                        </td>
-                                        <td>
-                                            Philip Chaney
-                                        </td>
-                                        <td>
-                                            Korea, South
-                                        </td>
-                                        <td>
-                                            Overland Park
-                                        </td>
-                                        <td class="text-primary">
-                                            $38,735
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            5
-                                        </td>
-                                        <td>
-                                            Doris Greene
-                                        </td>
-                                        <td>
-                                            Malawi
-                                        </td>
-                                        <td>
-                                            Feldkirchen in Kärnten
-                                        </td>
-                                        <td class="text-primary">
-                                            $63,542
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            6
-                                        </td>
-                                        <td>
-                                            Mason Porter
-                                        </td>
-                                        <td>
-                                            Chile
-                                        </td>
-                                        <td>
-                                            Gloucester
-                                        </td>
-                                        <td class="text-primary">
-                                            $78,615
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
+                        <div class="row">
+                            <div class="col-md-4" style="margin-bottom: 15px;">
+                                <button class="btn btn-info" type="button" data-toggle="modal" data-target="#add"> <i
+                                        class="material-icons">&#xE147;</i>
+                                    <span>Add New User</span></button>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="search-box">
+                                    <i class="material-icons">&#xE8B6;</i>
+                                    <input type="text" placeholder="Search" [(ngModel)]="filterList">
+                                </div>
+
+                            </div>
+                            <!-- <div class="justify-content-between">
+                            <div class="row ">
+                                <div class="col-md-4">
+                                    <div class="search-box">
+                                        <i class="material-icons">&#xE8B6;</i>
+                                        <input type="text" placeholder="Search" [(ngModel)]="filterList">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <button class="btn btn-dark add-new" type="button" data-toggle="modal"
+                                        data-target="#add">
+
+                                        <i class="material-icons">&#xE147;</i> <span>Add New User</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+
+
+
+                            <div class="table-responsive">
+
+                                <div class="tableFixHead">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>N°</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th>Details</th>
+                                                <th>Update</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let todo of tab | filter:filterList; let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td> {{todo.email}}</td>
+                                                <td> {{todo.role}}</td>
+                                                <td *ngIf="todo.status==='active'"><span
+                                                        class="status text-success">&bull;</span>
+                                                    {{todo.status}}
+                                                </td>
+                                                <td *ngIf="todo.status==='suspended'"><span
+                                                        class="status text-danger">&bull;</span>
+                                                    {{todo.status}}
+                                                </td>
+                                                <td>
+                                                    <button type="button" (click)="showDetails(i,todo)"
+                                                        data-toggle="modal" data-target="#details" class="settings">
+
+                                                        <i class="material-icons">&#xE417;</i>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="edit" (click)="update(todo)"
+                                                        data-toggle="modal" data-target="#update">
+
+                                                        <i class="material-icons">edit</i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-            <div class="col-md-12">
-                <div class="card card-plain">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title mt-0"> Table on Plain Background</h4>
-                        <p class="card-category"> Here is a subtitle for this table</p>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class="">
-                                    <th>
-                                        ID
-                                    </th>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Country
-                                    </th>
-                                    <th>
-                                        City
-                                    </th>
-                                    <th>
-                                        Salary
-                                    </th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            1
-                                        </td>
-                                        <td>
-                                            Dakota Rice
-                                        </td>
-                                        <td>
-                                            Niger
-                                        </td>
-                                        <td>
-                                            Oud-Turnhout
-                                        </td>
-                                        <td>
-                                            $36,738
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            2
-                                        </td>
-                                        <td>
-                                            Minerva Hooper
-                                        </td>
-                                        <td>
-                                            Curaçao
-                                        </td>
-                                        <td>
-                                            Sinaai-Waas
-                                        </td>
-                                        <td>
-                                            $23,789
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            3
-                                        </td>
-                                        <td>
-                                            Sage Rodriguez
-                                        </td>
-                                        <td>
-                                            Netherlands
-                                        </td>
-                                        <td>
-                                            Baileux
-                                        </td>
-                                        <td>
-                                            $56,142
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            4
-                                        </td>
-                                        <td>
-                                            Philip Chaney
-                                        </td>
-                                        <td>
-                                            Korea, South
-                                        </td>
-                                        <td>
-                                            Overland Park
-                                        </td>
-                                        <td>
-                                            $38,735
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            5
-                                        </td>
-                                        <td>
-                                            Doris Greene
-                                        </td>
-                                        <td>
-                                            Malawi
-                                        </td>
-                                        <td>
-                                            Feldkirchen in Kärnten
-                                        </td>
-                                        <td>
-                                            $63,542
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            6
-                                        </td>
-                                        <td>
-                                            Mason Porter
-                                        </td>
-                                        <td>
-                                            Chile
-                                        </td>
-                                        <td>
-                                            Gloucester
-                                        </td>
-                                        <td>
-                                            $78,615
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">User Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Lastname</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td>{{tab_details?.name}}</td>
+                                <td>{{tab_details?.lastname}}</td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
                 </div>
             </div>
         </div>
     </div>
-  </div>
-  
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-7 mx-auto">
+                                <h3 class="display-4">REGISTRATION</h3>
+
+
+                                <mat-card class="my-card">
+                                    <mat-card-content>
+
+
+                                        <form class="my-form" [formGroup]='registerForm'>
+
+                                            <mat-radio-group formControlName="role">
+                                                <mat-radio-button *ngFor="let role of roles" [value]="role">
+                                                    {{role}}
+                                                </mat-radio-button>
+                                            </mat-radio-group>
+
+
+                                            <mat-form-field class="full-width">
+
+                                                <mat-label>Name</mat-label>
+                                                <input matInput placeholder="Name" formControlName="name">
+                                                <mat-error
+                                                    *ngIf="registerForm.controls['name'].errors?.required && registerForm.controls['name'].touched">
+                                                    Name is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Lastname</mat-label>
+                                                <input matInput placeholder="Lastname" formControlName="lastname">
+                                                <mat-error
+                                                    *ngIf="registerForm.controls['lastname'].errors?.required && registerForm.controls['lastname'].touched">
+                                                    Lastname is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Phone</mat-label>
+                                                <input matInput placeholder="Phone" formControlName="phone">
+                                            </mat-form-field>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Email</mat-label>
+                                                <input matInput placeholder="Email*" formControlName="email"
+                                                    (keyup)=verifEmail()>
+                                                <mat-error *ngIf="
+                                    registerForm.controls['email'].errors?.required &&
+                                    registerForm.controls['email'].touched">
+                                                    email is required!</mat-error>
+                                                <mat-error
+                                                    *ngIf="registerForm.controls['email'].errors?.email && registerForm.controls['email'].touched ">
+                                                    invalid email</mat-error>
+
+                                                <mat-error *ngIf="emailExist">
+                                                    email already exist</mat-error>
+                                            </mat-form-field>
+
+
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Password</mat-label>
+                                                <input matInput type="password" placeholder="Password*"
+                                                    formControlName="password">
+
+
+                                            </mat-form-field>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Confirm Password</mat-label>
+                                                <input matInput type="password" placeholder="Password*"
+                                                    formControlName="confpassword">
+
+
+                                            </mat-form-field>
+
+                                        </form>
+
+                                        <!-- <form class="my-form">
+                                  <mat-form-field class="full-width">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput placeholder="email*" />
+                      
+                                  </mat-form-field>
+                                  <mat-form-field class="full-width">
+                                    <mat-label>Password</mat-label>
+                                    <input type="password" matInput placeholder="password*" />
+                      
+                      
+                                </form> -->
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <button mat-raised-button color="primary" (click)="registerUser()"
+                                            [disabled]="!registerForm.valid">
+                                            SAVE
+                                        </button>
+                                    </mat-card-actions>
+
+                                </mat-card>
+
+                            </div>
+                        </div>
+                        <!-- End -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-7 mx-auto">
+                                <h3 class="display-4">REGISTRATION</h3>
+
+
+                                <mat-card class="my-card">
+                                    <mat-card-content>
+
+
+                                        <form class="my-form" [formGroup]='updateForm'>
+
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Email</mat-label>
+                                                <input matInput placeholder="email*" formControlName="email" />
+                                            </mat-form-field>
+                                            <mat-radio-group formControlName="active">
+                                                <mat-radio-button value="active">Acive</mat-radio-button>
+                                                <mat-radio-button value="suspended">suspended</mat-radio-button>
+                                            </mat-radio-group>
+
+                                        </form>
+
+                                        <!-- <form class="my-form">
+                                      <mat-form-field class="full-width">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput placeholder="email*" />
+                          
+                                      </mat-form-field>
+                                      <mat-form-field class="full-width">
+                                        <mat-label>Password</mat-label>
+                                        <input type="password" matInput placeholder="password*" />
+                          
+                          
+                                    </form> -->
+                                    </mat-card-content>
+
+
+                                </mat-card>
+
+                            </div>
+                        </div>
+                        <!-- End -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
