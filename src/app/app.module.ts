@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
+
 import {
   MatInputModule,
   MatButtonModule,
@@ -16,6 +17,7 @@ import {
   MatCardModule,
   MatDialogModule,
   MatRadioModule,
+  MatSnackBarModule,
   MatTableModule
 } from "@angular/material";
 
@@ -64,7 +66,8 @@ import { FilterPipe } from './filter.pipe';
     NgxPaginationModule,
     RouterModule,
     AppRoutingModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
 
   ],
   declarations: [

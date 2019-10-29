@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { RegisterUserComponent } from 'app/register-user/register-user.component';
 import { DialogueshowComponent } from 'app/dialogueshow/dialogueshow.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -26,11 +26,14 @@ export class ListComponent implements OnInit {
   filterList = '';
   updateForm: FormGroup;
 
+  durationInSeconds = 5;
+  id: any;
 
 
 
 
-  constructor(private auth: AuthService, public dialog: MatDialog, ) {
+
+  constructor(private auth: AuthService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
 
     this.registerForm = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
@@ -44,7 +47,7 @@ export class ListComponent implements OnInit {
     this.updateForm = new FormGroup({
 
       email: new FormControl(),
-      active: new FormControl()
+      status: new FormControl()
 
     });
 
@@ -92,7 +95,9 @@ export class ListComponent implements OnInit {
 
     this.auth.registerUser(this.registerForm.value).subscribe((res: any) => {
       console.log(res);
+      this._snackBar.open('Ajout avec succes', 'Fermer', { duration: 5000, verticalPosition: 'bottom', horizontalPosition: 'right' })
       this.ngOnInit()
+
 
 
     });
@@ -146,7 +151,10 @@ export class ListComponent implements OnInit {
 
 
   update(item) {
+
     this.updateForm.controls['email'].setValue(item.email)
+    this.updateForm.controls['status'].setValue(item.status)
+    this.id = item._id
 
     console.log(item)
   }
@@ -176,5 +184,17 @@ export class ListComponent implements OnInit {
       }
     })
   }
+
+
+  updateUser(item) {
+
+    this.auth.updateUser(this.id, this.updateForm.value).subscribe(res => {
+      console.log(res)
+      this.ngOnInit()
+
+    })
+  }
+
+
 }
 

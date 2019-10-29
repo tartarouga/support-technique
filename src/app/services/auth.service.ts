@@ -100,6 +100,11 @@ export class AuthService {
 
   }
 
+  updateUser(id, form) {
+    const header = new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    return this.http.post('http://localhost:3000/users/updateUser/' + id, form, { headers: header })
+  }
+
 
 
 }
