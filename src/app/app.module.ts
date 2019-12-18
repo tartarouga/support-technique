@@ -36,6 +36,7 @@ import { RegisterComponent } from './register/register.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { HeaderComponent } from './header/header.component';
 import { ListComponent } from './plateforme/list/list.component';
@@ -44,6 +45,14 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { DialogueshowComponent } from './dialogueshow/dialogueshow.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FilterPipe } from './filter.pipe';
+import { ClientComponent } from './plateforme/client/client.component';
+import { ReclamationComponent } from './plateforme/reclamation/reclamation.component';
+import { ChatComponent } from './plateforme/chat/chat.component';
+
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   imports: [
@@ -67,7 +76,9 @@ import { FilterPipe } from './filter.pipe';
     RouterModule,
     AppRoutingModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CKEditorModule,
+    SocketIoModule.forRoot(config)
 
   ],
   declarations: [
@@ -90,7 +101,14 @@ import { FilterPipe } from './filter.pipe';
 
     DialogueshowComponent,
 
-    FilterPipe
+    FilterPipe,
+
+    ClientComponent,
+
+    ReclamationComponent,
+    ChatComponent
+
+
 
   ],
   entryComponents: [

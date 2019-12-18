@@ -16,6 +16,7 @@ export class NavbarComponent implements OnInit {
     private sidebarVisible: boolean;
     role: any;
     user: any;
+    file: any;
 
 
 
@@ -26,9 +27,9 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit() {
 
-
+        this.file = this.auth.connectedUser.avatar
         this.listTitles = ADMINROUTES.filter(listTitle => listTitle);
-        console.log(this.listTitles)
+        //console.log(this.listTitles)
         const navbar: HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
         this.router.events.subscribe((event) => {
@@ -39,6 +40,15 @@ export class NavbarComponent implements OnInit {
                 this.mobile_menu_visible = 0;
             }
         });
+
+        if (this.auth.connectedUser.role === 'client') {
+            this.auth.getfile(this.file).subscribe((data: any) => {
+                console.log(data)
+                this.file = data;
+            })
+        }
+
+
 
 
     }

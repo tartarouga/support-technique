@@ -27,6 +27,11 @@ export class RegisterComponent implements OnInit {
   emailExist: any = false;
 
   notsamePass: boolean = false;
+  msg: string;
+  selectedFile: string | Blob;
+  defaultImage = '../../assets/img/avatar_2x.png';
+  size = false;
+  user: any;
 
 
 
@@ -38,7 +43,8 @@ export class RegisterComponent implements OnInit {
       confpassword: new FormControl("", [Validators.required]),
       name: new FormControl("", [Validators.required]),
       lastname: new FormControl("", [Validators.required]),
-      phone: new FormControl()
+      phone: new FormControl(),
+      avatar: new FormControl("")
     })
 
     this.registerForm.controls.password.valueChanges
@@ -55,13 +61,53 @@ export class RegisterComponent implements OnInit {
 
 
 
+  fileInputChange(event) {
+    this.defaultImage = event.target.files[0];
+    this.selectedFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event: any) => {
+      this.defaultImage = event.target.result;
+    };
+    console.log(event.target.files[0])
+    if (event.target.files[0].size >= 5000000) {
+
+      this.size = true;
+      console.log(this.size)
+      this.registerForm.controls.avatar.setErrors({ 'valid': false });
+    } else {
+      this.size = false;
+      console.log(this.size)
+
+      this.registerForm.controls.avatar.setErrors({ 'valid': true });
+      this.registerForm.controls.avatar.setValue(event.target.files[0].name)
+
+    }
+
+
+  }
+
 
   register() {
-    this.auth.register(this.registerForm.value).subscribe((res: any) => {
-      console.log(res);
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+
+
+
+    this.auth.upload(formData).subscribe((data: any) => {
+      console.log(data)
+      this.user = this.registerForm.value;
+      this.user.avatar = data.filename;
+      this.auth.register(this.user).subscribe((res: any) => {
+        console.log(res);
+
+      });
 
 
     });
+
+
+    console.log(this.registerForm.value)
   }
 
   verifEmail() {

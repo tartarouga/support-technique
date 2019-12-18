@@ -1,0 +1,11 @@
+.img-circle {
+    border-radius: 50%;
+}
+
+.img-thumbnail {
+  display: inline-block;
+  width:10%;
+  height:auto;
+  
+   border: 1px solid #ddd;
+  }

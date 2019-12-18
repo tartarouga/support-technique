@@ -1,0 +1,60 @@
+.status {
+    font-size: 30px;
+    margin: 2px 2px 0 0;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 10px;
+}
+.text-success {
+    color: #10c469;
+}
+.text-danger {
+    color: #ff5b5b;
+}
+
+.settings {
+    color: #2196F3;
+    border : none;
+    background: none;
+
+}
+.edit {
+    color: #FFC107;
+    border : none;
+    background: none;
+
+}
+
+.tableFixHead          { overflow-y: auto; height: 300px; }
+.tableFixHead thead th { position: sticky; top: 0; }
+
+/* Just common table stuff. Really. */
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th     { background:#eee; }
+
+ .search-box {
+        position: relative;        
+        float: right;
+       
+    }
+    .search-box input {
+        height: 30px;
+       
+        padding-left: 35px;
+        
+    }
+	
+    .search-box i {
+   
+        position: absolute;
+        font-size: 19px;
+        top: 8px;
+        left: 10px;
+    }
+    .mat-radio-button ~ .mat-radio-button {
+        margin-left: 16px;
+      }
+    
+
+    

@@ -11,8 +11,8 @@
 
                         <div class="row">
                             <div class="col-md-4" style="margin-bottom: 15px;">
-                                <button class="btn btn-info" type="button" data-toggle="modal" data-target="#add"> <i
-                                        class="material-icons">&#xE147;</i>
+                                <button [disabled]="user!='admin'" class="btn btn-info" type="button"
+                                    data-toggle="modal" data-target="#add"> <i class="material-icons">&#xE147;</i>
                                     <span>Add New User</span></button>
                             </div>
                             <div class="col-md-8">
@@ -80,7 +80,8 @@
                                                 </td>
                                                 <td>
                                                     <button type="button" class="edit" (click)="update(todo)"
-                                                        data-toggle="modal" data-target="#update">
+                                                        data-toggle="modal" data-target="#update"
+                                                        [disabled]="user!='admin'">
 
                                                         <i class="material-icons">edit</i>
                                                     </button>

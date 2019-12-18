@@ -12,7 +12,9 @@ var userSchema = new mongoose.Schema({
     techBack: { type: Schema.Types.ObjectId, ref: 'techBack' },
     conseiller: { type: Schema.Types.ObjectId, ref: 'conseiller' },
     client: { type: Schema.Types.ObjectId, ref: 'client' },
-    status: { type: String, enum: ['active', 'suspended'], default: 'suspended' }
+    status: { type: String, enum: ['active', 'suspended'], default: 'suspended' },
+    avatar: { type: String },
+    connected: { type: Boolean, default: false }
 
 
 })

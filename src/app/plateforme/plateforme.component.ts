@@ -5,6 +5,8 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+import { AuthService } from 'app/services/auth.service';
 @Component({
   selector: 'app-plateforme',
   templateUrl: './plateforme.component.html',
@@ -15,10 +17,13 @@ export class PlateformeComponent implements OnInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
+  user: any;
 
-  constructor(public location: Location, private router: Router) { }
+  constructor(public location: Location, private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
+    this.user = this.auth.connectedUser.role;
+    console.log(this.user)
     const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
     if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {

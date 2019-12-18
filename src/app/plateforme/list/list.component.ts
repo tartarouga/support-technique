@@ -5,12 +5,13 @@ import { RegisterUserComponent } from 'app/register-user/register-user.component
 import { DialogueshowComponent } from 'app/dialogueshow/dialogueshow.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.css', './list.component.scss']
 })
 export class ListComponent implements OnInit {
 
@@ -22,18 +23,20 @@ export class ListComponent implements OnInit {
   dialogValue: any;
   registerForm: any;
   emailExist: boolean;
-  roles: string[] = ['admin', 'chefBack', 'cheffront', 'techBack', 'techFront', 'conseiller'];
+  roles: string[] = ['admin', 'chefBack', 'chefFront', 'techBack', 'techFront', 'conseiller'];
   filterList = '';
   updateForm: FormGroup;
 
   durationInSeconds = 5;
   id: any;
+  currentRout: string;
 
 
 
 
 
-  constructor(private auth: AuthService, public dialog: MatDialog, private _snackBar: MatSnackBar) {
+
+  constructor(private auth: AuthService, public dialog: MatDialog, private _snackBar: MatSnackBar, private route: ActivatedRoute) {
 
     this.registerForm = new FormGroup({
       email: new FormControl("", [Validators.required, Validators.email]),
@@ -55,9 +58,10 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
 
+    this.user = this.auth.connectedUser.role;
 
 
-    console.log(this.auth.connectedUser.role)
+    console.log(this.auth.connectedUser)
     if (this.auth.connectedUser.role === 'admin') {
       this.auth.getAllUser().subscribe((res: any) => {
         console.log(res.data);
@@ -74,8 +78,18 @@ export class ListComponent implements OnInit {
       this.auth.getTechFront().subscribe((res: any) => {
         console.log(res.data);
         this.tab = res.data;
+        console.log(this.tab)
       })
     }
+    if (this.auth.connectedUser.role === "conseiller") {
+      this.auth.getClient().subscribe((res: any) => {
+        console.log(res.data);
+        this.tab = res.data;
+        console.log(this.tab)
+      })
+    }
+
+
 
   }
 

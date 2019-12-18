@@ -10,7 +10,7 @@
           <!-- Demo content-->
           <div class="container">
             <div class="row">
-              <div class="col-lg-10 col-xl-7 mx-auto">
+              <div class="col-lg-10  mx-auto">
                 <h3 class="display-4">REGISTRATION</h3>
                 <p class="text-muted mb-4">
                   Please enter the informations below!
@@ -21,6 +21,22 @@
 
 
                     <form class="my-form" [formGroup]='registerForm'>
+
+                      <div class="text-center">
+                        <img src="{{defaultImage}}" class="avatar img-circle img-thumbnail" alt="avatar"
+                          (click)="fileinput.click()">
+                        <input type="file" #fileinput accept=".png,.jpg,.jpeg" style="display: none"
+                          (change)="fileInputChange($event)">
+                        <p class="font-weight-light" name='file' *ngIf="!size">
+                          Click to select an image profile
+                        </p>
+                        <p class="font-weight-light" name='file' *ngIf="size" style="color: red;">
+                          image size must be less than <strong>5MB</strong>
+                        </p>
+
+                        <input type="text" formControlName="avatar" hidden>
+
+                      </div>
 
                       <mat-form-field class="full-width">
                         <mat-label>Name</mat-label>
